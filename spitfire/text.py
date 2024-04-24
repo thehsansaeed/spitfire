@@ -1,13 +1,10 @@
-# Copyright 2007 The Spitfire Authors. All Rights Reserved.
-#
-# Use of this source code is governed by a BSD-style
-# license that can be found in the LICENSE file.
+# test.py
 
 import re
 import string
 import unicodedata
 
-normal_characters = string.lowercase + string.uppercase
+normal_characters = string.ascii_lowercase + string.ascii_uppercase
 mangled_character_names = [
     'LATIN SMALL LETTER A WITH RING ABOVE',
     'LATIN SMALL LETTER THORN',
@@ -73,8 +70,20 @@ def i18n_mangled_message(msg):
     return ''.join([char_map.get(c, c) for c in msg])
 
 
-whitespace_regex = re.compile('\s+', re.UNICODE)
+whitespace_regex = re.compile(r'\s+', re.UNICODE)
 
 
 def normalize_whitespace(text):
     return whitespace_regex.sub(' ', text)
+
+
+# Example usage:
+if __name__ == "__main__":
+    ascii_message = "Hello, world!"
+    unicode_message = i18n_mangled_message(ascii_message)
+    print("Original message:", ascii_message)
+    print("Mangled message:", unicode_message)
+    text_with_whitespace = "   This   is   a   test   with   whitespace   "
+    normalized_text = normalize_whitespace(text_with_whitespace)
+    print("Original text:", text_with_whitespace)
+    print("Normalized text:", normalized_text)

@@ -60,9 +60,11 @@ def simple_str_filter(value):
     """Return a string if the input type is something primitive."""
     if isinstance(value, (str, unicode, int, long, float,
                           runtime.UndefinedPlaceholder)):
-        # fixme: why do force this conversion here?
-        # do we want to be unicode or str?
-        return str(value)
+        # Convert Unicode to string if necessary
+        if isinstance(value, unicode):
+            return value.encode('utf-8')
+        else:
+            return str(value)
     else:
         return ''
 
